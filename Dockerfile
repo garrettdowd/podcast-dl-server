@@ -23,5 +23,4 @@ EXPOSE 8567
 
 VOLUME ["/downloads"]
 
-CMD ["tail","-f","/dev/null"]
-#CMD [ "python3", "-u", "podcast-dl-server.py" ]
+CMD [ "python3", "-u", "podcast-dl-server.py" ]
