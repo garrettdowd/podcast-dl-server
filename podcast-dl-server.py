@@ -5,7 +5,6 @@ import subprocess
 from queue import Queue
 from bottle import route, run, Bottle, request, static_file
 from threading import Thread
-import youtube_dl
 from pathlib import Path
 from collections import ChainMap
 
@@ -19,8 +18,8 @@ app_defaults = {
     # 'YDL_RECODE_VIDEO_FORMAT': None,
     # 'YDL_OUTPUT_TEMPLATE': '/podcast-dl/%(title)s [%(id)s].%(ext)s',
     # 'YDL_ARCHIVE_FILE': None,
-    'YDL_SERVER_HOST': '0.0.0.0',
-    'YDL_SERVER_PORT': 8567,
+    'PDL_SERVER_HOST': '0.0.0.0',
+    'PDL_SERVER_PORT': 8567,
 }
 
 
@@ -115,7 +114,7 @@ def download(url, request_options):
     # with youtube_dl.YoutubeDL(get_ydl_options(request_options)) as ydl:
     #     ydl.download([url])
 
-    command = ["podcast-dl", "--archive", "archive.log", "--url", url]
+    command = ["podcast-dl", "--archive", "archive.log", "--out-dir", "/downloads", "--url", url]
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output, error = proc.communicate()
     return {
