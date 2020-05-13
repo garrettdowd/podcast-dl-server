@@ -1,25 +1,26 @@
 #
-# youtube-dl Server Dockerfile
+# podcast-dl Server Dockerfile
 #
-# https://github.com/manbearwiz/youtube-dl-server-dockerfile
+# https://github.com/garrettdowd/podcast-dl-server
 #
 
-FROM python:alpine
+FROM node:14-alpine
 
-RUN apk add --no-cache \
-  ffmpeg \
-  tzdata
+WORKDIR /usr/local/lib/node_modules/
 
-RUN mkdir -p /usr/src/app
+RUN npm i podcast-dl \
+  && apk update \ 
+  && apk add python3 \
+  && apk add py3-pip \
+  && pip install bottle
+  && mkdir /downloads \
+  && mkdir /usr/src/app
+
 WORKDIR /usr/src/app
-
-COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . /usr/src/app
 
-EXPOSE 8080
+EXPOSE 8567 
 
-VOLUME ["/youtube-dl"]
+VOLUME ["/downloads"]
 
-CMD [ "python", "-u", "./youtube-dl-server.py" ]
+CMD [ "python", "-u", "./podcast-dl-server.py" ]
