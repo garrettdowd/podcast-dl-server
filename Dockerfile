@@ -9,17 +9,17 @@ FROM node:14-alpine
 WORKDIR /usr/local/lib/node_modules/
 
 RUN npm i podcast-dl \
-  && apk update \ 
+  && apk update \
   && apk add python3 \
   && apk add py3-pip \
-  && pip install bottle
+  && pip3 install bottle \
   && mkdir /downloads \
-  && mkdir /usr/src/app
+  && mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
 
-EXPOSE 8567 
+EXPOSE 8567
 
 VOLUME ["/downloads"]
 
