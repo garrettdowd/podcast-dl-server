@@ -11,10 +11,12 @@ WORKDIR /usr/local/lib/node_modules/
 RUN apk update \
   && apk add --update npm \
   && npm i podcast-dl \
-  && PATH=$PATH:/usr/local/lib/node_modules/.bin/
+  && echo "export PATH=$PATH:/usr/local/lib/node_modules/.bin" >> /etc/profile \
   && pip3 install bottle \
   && mkdir /downloads \
   && mkdir -p /usr/src/app
+
+ENV PATH=$PATH:/usr/local/lib/node_modules/.bin
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
