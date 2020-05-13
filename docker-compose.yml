@@ -1,0 +1,11 @@
+---
+version: "2"
+services:
+  podcast-dl:
+    container_name: podcast-dl
+    image: garrettdowd/podcast-dl-server
+    volumes:
+      - /downloads:/path-to-download-folder
+    ports:
+      - 8567:8567
+    restart: unless-stopped
