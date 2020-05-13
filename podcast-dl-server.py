@@ -111,17 +111,7 @@ def dl_worker():
 
 
 def download(url, request_options):
-    # with youtube_dl.YoutubeDL(get_ydl_options(request_options)) as ydl:
-    #     ydl.download([url])
-
-    command = ["podcast-dl", "--archive", "archive.log", "--out-dir", "/downloads", "--url", url]
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = proc.communicate()
-    return {
-        "output": output.decode('ascii'),
-        "error":  error.decode('ascii')
-    }
-
+    os.system('podcast-dl --archive archive.log --out-dir /downloads --url '+url)
 
 dl_q = Queue()
 done = False

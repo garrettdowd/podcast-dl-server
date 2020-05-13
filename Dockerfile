@@ -4,14 +4,14 @@
 # https://github.com/garrettdowd/podcast-dl-server
 #
 
-FROM node:14-alpine
+FROM python:alpine
 
 WORKDIR /usr/local/lib/node_modules/
 
-RUN npm i podcast-dl \
-  && apk update \
-  && apk add python3 \
-  && apk add py3-pip \
+RUN apk update \
+  && apk add --update npm \
+  && npm i podcast-dl \
+  && PATH=$PATH:/usr/local/lib/node_modules/.bin/
   && pip3 install bottle \
   && mkdir /downloads \
   && mkdir -p /usr/src/app
@@ -23,4 +23,5 @@ EXPOSE 8567
 
 VOLUME ["/downloads"]
 
-CMD [ "python3", "-u", "podcast-dl-server.py" ]
+CMD ["tail","-f","/dev/null"]
+#CMD [ "python3", "-u", "podcast-dl-server.py" ]
