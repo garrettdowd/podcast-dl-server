@@ -4,7 +4,7 @@
 
 # podcast-dl-server
 
-Very spartan Web and REST interface for downloading podcasts onto a server. Inspired and heavily derived from [youtube-dl-server](https://github.com/manbearwiz/youtube-dl-server) [`bottle`](https://github.com/bottlepy/bottle) + [`podcast-dl`](https://github.com/lightpohl/podcast-dl).
+Very spartan Web and REST interface for downloading podcasts onto a server. Inspired and heavily derived from [youtube-dl-server](https://github.com/manbearwiz/youtube-dl-server). [`bottle`](https://github.com/bottlepy/bottle) + [`podcast-dl`](https://github.com/lightpohl/podcast-dl).
 
 ![screenshot][1]
 
@@ -23,12 +23,17 @@ docker run -d --net="host" --name podcast-dl -v /downloads:/path-to-download-fol
 This is an example service definition that could be put in `docker-compose.yml`.
 
 ```yml
+---
+version: "2"
+services:
   podcast-dl:
-    name: podcast-dl
+    container_name: podcast-dl
     image: garrettdowd/podcast-dl-server
     volumes:
       - /downloads:/path-to-download-folder
-    restart: always
+    ports:
+      - 8567:8567
+    restart: unless-stopped
 ```
 
 ## Usage
