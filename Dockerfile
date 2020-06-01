@@ -4,19 +4,18 @@
 # https://github.com/garrettdowd/podcast-dl-server
 #
 
-FROM python:alpine
+FROM python:slim
 
-WORKDIR /usr/local/lib/node_modules/
+WORKDIR /usr/local/bin/
 
-RUN apk update \
-  && apk add --update npm \
-  && npm i podcast-dl \
-  && echo "export PATH=$PATH:/usr/local/lib/node_modules/.bin" >> /etc/profile \
+RUN apt update \
+  && apt upgrade \
+  && wget https://github.com/lightpohl/podcast-dl/releases/latest/download/podcast-dl-linux-x64 \
+  && mv podcast-dl-linux-x64 podcast-dl \
+  && chmod +x podcast-dl \
   && pip install bottle \
   && mkdir /downloads \
   && mkdir -p /usr/src/app
-
-ENV PATH=$PATH:/usr/local/lib/node_modules/.bin
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
