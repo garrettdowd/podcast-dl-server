@@ -20,7 +20,7 @@ docker run -d --net="host" --name podcast-dl -v /downloads:/path-to-download-fol
 
 ### Docker Compose
 
-This is an example service definition that could be put in `docker-compose.yml`.
+This is an example service definition that could be put in `docker-compose.yml` which can be downloaded [here](https://raw.githubusercontent.com/garrettdowd/podcast-dl-server/master/docker-compose.yml).
 
 ```yml
 ---
@@ -63,13 +63,6 @@ fetch(`http://${host}:8080/podcast-dl/q`, {
 });
 ```
 
-#### Bookmarklet
-
-Add the following bookmarklet to your bookmark bar so you can conviently send the current page url to your youtube-dl-server instance.
-
-```javascript
-javascript:!function(){fetch("http://${host}:8080/podcast-dl/q",{body:new URLSearchParams({url:window.location.href,format:"bestvideo"}),method:"POST"})}();
-```
 
 ## Implementation
 
