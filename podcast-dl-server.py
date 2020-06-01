@@ -111,7 +111,14 @@ def dl_worker():
 
 
 def download(url, request_options):
-    os.system('podcast-dl --archive archive.log --out-dir /downloads --url '+url)
+    command = ["podcast-dl", "--archive", "/Downloads/archive.json", "--outdir", ""/Downloads/{{podcast_title}}"", "--url", url]
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
+    output, error = proc.communicate()
+    return {
+        "output": output.decode('ascii'),
+        "error":  error.decode('ascii')
+    }
 
 dl_q = Queue()
 done = False
